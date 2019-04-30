@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    * {
+        padding:0;
+        margin:0;
+    }
+    </style>
+</head>
+<body>
+        <video id="vid" src="bbb.mp4"></video> 
+        <br>
+        <button onclick="play()">PLAY</button>
+        <button onclick="pause()">PAUSE</button>
+        <button onclick="volume(0.2)">QUIET</button>
+        <button onclick="volume(1)">QUIET</button>        
+        <hr>
+        <button onclick="load1()">PLAY GLGLZ</button>
+        <button onclick="load2()">PLAY 99FM</button>
+        <button onclick="spause()">PAUSE</button>
+     
+        <script>
+            var vid = document.getElementById('vid');
+            var sud = new Audio();
+            ['play', 'loadstart', 'waiting', 'stalled', 'playing', 'pause', 'error']
+            .map(function (evt) {
+                sud.addEventListener(evt, function (e) {
+                    console.log(e.type);
+                });
+            });
+            function play() {
+                vid.play();
+            }
+            function pause() {
+                vid.pause();
+            }
+            function volume(level) {
+                vid.volume = level;
+            }
+            function load1() {
+                sud.pause();
+                sud.src = "http://glzwizzlv.bynetcdn.com/glglz_mp3";
+                sud.play();
+            }
+            function load2() {
+                sud.pause();
+                sud.src = "http://99.livecdn.biz/99fm_aac";
+                sud.play();
+            }         
+            function spause() {
+                sud.pause();
+            }
+        
+        </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+Interval
+<button onclick="run()">RUN</button>
+<button onclick="stop()">STOP</button>
+<input type="checkbox" id="cb" checked="checked">
+<hr>
+Timeout
+<button onclick="runt()">RUN</button>
+<button onclick="endt()">STOP</button>
+<button onclick="restartt()">RESTART</button>
+
+
+
+<script>
+    var intrvl;
+    var tmout;
+    function run() {
+        console.log('running');
+        document.getElementById('cb').checked = true;
+        var i = 0;
+        intrvl = setInterval( function() {
+            console.log(++i);
+            if(!document.getElementById('cb').checked) {
+                console.log('because cb is off');
+                stop();
+            }
+        },1000);
+    }
+    function stop() {
+        console.log('stopping');
+        clearInterval(intrvl);
+    }
+    function runt() {
+        console.log('start timeout');
+        tmout = setTimeout(function() {
+            console.log('end timeout');
+        },5000);
+        console.log('--------');
+    }
+    function endt() {
+        console.log('end timeout prematurly');
+        clearTimeout(tmout);
+    }
+    function restartt() {
+        endt();
+        runt();
+    }
+</script>

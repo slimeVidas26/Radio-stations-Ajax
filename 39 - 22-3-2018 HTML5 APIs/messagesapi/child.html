@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Messaging API Child</title>
+  </head>
+  <body>
+      <h1>Child window</h1>
+      <button onclick="callJS()">Call Parent JS</button>
+      <button onclick="html5Msg()">Send Parent HTML5 Message</button>
+      <h3>Messages</h3>
+      <ul id="msgs"></ul>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    var receiver = parent;
+    function callJS() {
+      receiver.msg("JS Call");
+    }
+    function msg(str) {
+      $('#msgs').append('<li>got '+str+'</li>');
+    }
+
+    window.addEventListener('message',function(e) {
+      console.log(e);
+		  console.log('got from: ',e.origin);
+    	//if(e.origin !== 'test origin domain here') return;
+    	msg(e.data);
+    },false);
+    function html5Msg() {
+      receiver.postMessage("HTML5 Msg from child","http://localhost/");
+    }
+    </script>
+  </body>
+</html>

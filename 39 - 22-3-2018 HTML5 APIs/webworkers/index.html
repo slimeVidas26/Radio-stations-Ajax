@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Websowrkers</title>
+    <style>
+      ul { list-style-type:none;}
+      li { float:left; margin:10px;padding:10px;text-align:center;border:1px solid #ccc;}
+    </style>
+
+  </head>
+  <body>
+    <button onclick="add()">Add Worker</button>
+    <ul id="ctr"></ul>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+      //var i=0;
+      function add() {
+        var w;// = ++i;
+        //var
+        var li = $('<li>Count: <span></span><br></li>');
+        var sp = $(li).find('span');
+        var btn = $('<button>').html('End').click(function() {
+          terminateWorker(w);
+        });
+        li.append(btn);
+        $('#ctr').append(li);
+        w = new Worker("countWorker.js");
+        w.onmessage = function(e) {
+          //console.log(e);
+           $(sp).text(e.data);
+        };
+      }
+      function terminateWorker(w) {
+        w.terminate();
+        w = undefined;
+      }
+    </script>
+  </body>
+</html>

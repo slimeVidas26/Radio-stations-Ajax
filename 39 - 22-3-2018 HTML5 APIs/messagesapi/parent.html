@@ -1,0 +1,45 @@
+<!--
+run with http://localhost/html5/messagesapi/parent.html click ping child/parent all is good
+run with http://127.0.0.1/html5/messagesapi/parent.html click ping child/parent see cross domain block
+-->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Messaging API Parent</title>
+  </head>
+  <body>
+    <div style="width:500px;float:left;margin:30px;">
+      <h1>Parent window</h1>
+      <button onclick="callJS()">Call Child JS</button>
+      <button onclick="html5Msg()">Send Child HTML5 Message</button>
+      <h3>Messages</h3>
+      <ul id="msgs"></ul>
+    </div>
+    <div style="width:500px;float:left;margin:30px;">
+      <iframe id="fr" src="http://127.0.0.1/html5/messagesapi/child.html" style="width:100%;height:300px;"></iframe>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    var receiver = document.getElementById('fr').contentWindow;
+    function callJS() {
+      receiver.msg("JS Call From dad");
+    }
+    function msg(str) {
+      $('#msgs').append('<li>got '+str+'</li>');
+    }
+
+    window.addEventListener('message',function(e) {		
+        console.log(e);
+        console.log('got from: ',e.origin);
+        //if(e.origin !== 'test origin domain here') return;
+        msg(e.data);
+    },false);
+    function html5Msg() {
+      receiver.postMessage("HTML5 Msg from papa","http://127.0.0.1/");
+    }
+    </script>
+  </body>
+</html>
